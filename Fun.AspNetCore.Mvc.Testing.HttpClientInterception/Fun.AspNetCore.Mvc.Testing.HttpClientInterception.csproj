@@ -7,11 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Fun.AspNetCore.Mvc.Testing" Version="1.0.0" Condition="'$(Configuration)' == 'Release'" />
 		<PackageReference Include="JustEat.HttpClientInterception" Version="3.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Fun.AspNetCore.Mvc.Testing\Fun.AspNetCore.Mvc.Testing.csproj" />
+		<ProjectReference Include="..\Fun.AspNetCore.Mvc.Testing\Fun.AspNetCore.Mvc.Testing.csproj" Condition="'$(Configuration)' != 'Release'" />
 	</ItemGroup>
 
 </Project>
