@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Description>Extensions and utility code for testing ASP.NET Core web applications with HttpClient interception</Description>
+		<PackageTags>testing;functional;webapplication;httpclient;interception</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="JustEat.HttpClientInterception" Version="3.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Fun.AspNetCore.Mvc.Testing\Fun.AspNetCore.Mvc.Testing.csproj" />
+	</ItemGroup>
+
+</Project>

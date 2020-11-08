@@ -1,0 +1,49 @@
+<Project>
+
+	<PropertyGroup>
+		<Authors>Shayne van Asperen</Authors>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
+		<DebugType>embedded</DebugType>
+		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">true</ContinuousIntegrationBuild>
+		<NotNCrunch>false</NotNCrunch>
+		<NotNCrunch Condition="'$(NCrunch)' == ''">true</NotNCrunch>
+		<GenerateDocumentationFile Condition="$(NotNCrunch)">true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild Condition="$(NotNCrunch)">true</GeneratePackageOnBuild>
+		<SignAssembly Condition="$(GeneratePackageOnBuild)">true</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Fun.AspNetCore.Mvc.Testing.snk</AssemblyOriginatorKeyFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/shaynevanasperen/Fun.AspNetCore.Mvc.Testing</PackageProjectUrl>
+		<PackageIcon>GreenTick.png</PackageIcon>
+		<PackageIconUrl>https://raw.githubusercontent.com/shaynevanasperen/Fun.AspNetCore.Mvc.Testing/master/GreenTick.png</PackageIconUrl>
+		<RepositoryUrl>https://github.com/shaynevanasperen/Fun.AspNetCore.Mvc.Testing.git</RepositoryUrl>
+		<RepositoryType>Git</RepositoryType>
+		<APPVEYOR_BUILD_NUMBER Condition="'$(APPVEYOR_BUILD_NUMBER)' == ''">0</APPVEYOR_BUILD_NUMBER>
+		<MinVerTagPrefix>$(MSBuildProjectName).</MinVerTagPrefix>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Condition="$(NotNCrunch)" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0" PrivateAssets="All" />
+		<PackageReference Condition="$(NotNCrunch)" Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" PrivateAssets="All" />
+		<PackageReference Condition="$(NotNCrunch)" Include="Microsoft.NetCore.Analyzers" Version="3.3.0" PrivateAssets="All" />
+		<PackageReference Condition="$(NotNCrunch)" Include="MinVer" Version="2.3.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)GreenTick.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<SourceRoot Include="$(MSBuildThisFileDirectory)/" />
+	</ItemGroup>
+
+	<Target Name="FileVersion" AfterTargets="MinVer">
+		<PropertyGroup>
+			<BUILD_NUMBER Condition="'$(BUILD_NUMBER)' == ''">0</BUILD_NUMBER>
+			<FileVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(BUILD_NUMBER)</FileVersion>
+		</PropertyGroup>
+	</Target>
+
+</Project>
