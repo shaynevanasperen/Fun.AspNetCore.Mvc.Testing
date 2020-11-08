@@ -18,6 +18,7 @@ namespace Fun.AspNetCore.Mvc.Testing
 	{
 		Action<WebHostBuilderContext, IConfigurationBuilder>? _afterConfigureAppConfiguration;
 		Action<IServiceCollection>? _afterConfigureServices;
+		Action<IWebHostBuilder>? _afterConfigureWebHost;
 
 		/// <summary>
 		/// Configures an additional action to be performed after the application configuration has been configured.
@@ -31,6 +32,12 @@ namespace Fun.AspNetCore.Mvc.Testing
 		/// </summary>
 		/// <param name="configure">The action to perform.</param>
 		public void AfterConfigureServices(Action<IServiceCollection> configure) => _afterConfigureServices += configure;
+
+		/// <summary>
+		/// Configures an additional action to be performed after the web host has been configured.
+		/// </summary>
+		/// <param name="configure">The action to perform.</param>
+		public void AfterConfigureWebHost(Action<IWebHostBuilder> configure) => _afterConfigureWebHost += configure;
 
 		/// <summary>
 		/// Creates a new instance of <see cref="WebApplication"/> representing the running web application.
@@ -52,6 +59,8 @@ namespace Fun.AspNetCore.Mvc.Testing
 
 			builder.ConfigureAppConfiguration((context, config) => _afterConfigureAppConfiguration?.Invoke(context, config));
 			builder.ConfigureTestServices(services => _afterConfigureServices?.Invoke(services));
+
+			_afterConfigureWebHost?.Invoke(builder);
 		}
 	}
 }
