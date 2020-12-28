@@ -31,12 +31,12 @@ public abstract class WebApplicationTests : XunitWebApplicationTests<Startup> //
         }));
         factory.AfterConfigureServices(services =>
         {
-            services.AddHttpRequestInterceptor();
+            services.AddHttpRequestInterceptor(InterceptHttp);
             services.ReplaceLoggerFactoryWithXUnit(testOutputHelper);
         });
     }
 
-    public HttpClientInterceptorOptions Interceptor => App.Services.GetRequiredService<HttpClientInterceptorOptions>();
+    protected HttpClientInterceptorOptions InterceptHttp { get; } = new HttpClientInterceptorOptions().ThrowsOnMissingRegistration();
 }
 ```
 And then add further customization in a test class:

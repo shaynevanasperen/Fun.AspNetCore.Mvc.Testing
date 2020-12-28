@@ -22,12 +22,13 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// are isolated.
 		/// </summary>
 		/// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+		/// <param name="options">The <see cref="HttpClientInterceptorOptions"/> to use for configuring the interceptions.</param>
 		/// <returns>A reference to this instance after the operation has completed.</returns>
-		public static IServiceCollection AddHttpRequestInterceptor(this IServiceCollection services)
+		public static IServiceCollection AddHttpRequestInterceptor(this IServiceCollection services, HttpClientInterceptorOptions options)
 		{
 			if (services == null) throw new ArgumentNullException(nameof(services));
 
-			services.AddSingleton(new HttpClientInterceptorOptions().ThrowsOnMissingRegistration());
+			services.AddSingleton(options);
 			services.AddSingleton<IHttpMessageHandlerBuilderFilter, HttpInterceptionFilter>();
 			services.AddTransient<ITestScopeProducer>(provider =>
 				new TestScopeProducer<IDisposable>(provider.GetRequiredService<HttpClientInterceptorOptions>().BeginScope, x => x.Dispose));
