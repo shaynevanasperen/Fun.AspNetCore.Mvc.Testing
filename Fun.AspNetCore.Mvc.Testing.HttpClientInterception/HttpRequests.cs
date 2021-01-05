@@ -10,6 +10,6 @@ namespace Fun.AspNetCore.Mvc.Testing.HttpClientInterception
 		/// <summary>
 		/// Returns a new <see cref="HttpRequestInterceptionBuilder"/>.
 		/// </summary>
-		public static HttpRequestInterceptionBuilder Intercept => new HttpRequestInterceptionBuilder();
+		public static HttpRequestInterceptionBuilder Intercept => new();
 	}
 }
